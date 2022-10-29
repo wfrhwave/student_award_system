@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>上传成绩</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{lib/css/main.css}">
+    <link rel="stylesheet" th:href="@{/lib/css/public.css}">
+
+    <script th:src="@{/lib/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+
+
+    <style>
+
+        .layui-form input {
+            width: 215px;
+        }
+
+        .body {
+            margin-left: 200px;
+            height: 800px;
+        }
+
+        #image2 {
+            wdith: 100px;
+            height: 100px;
+        }
+
+        .layui-upload-list {
+            margin-left: 120px;
+
+        }
+
+        .layui-upload-img {
+            wdith: 100px;
+            height: 100px;
+        }
+
+        body {
+            background: url("/static/images/background/page_bg.JPG");
+            background-size: 100%;
+
+        }
+    </style>
+
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+
+            //…
+        });
+        //上传照片
+        layui.use('upload', function () {
+            var $ = layui.jquery
+                , upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: '/upload/'
+                , accept: 'images'
+                , size: 50000
+                , before: function (obj) {
+
+                    obj.preview(function (index, file, result) {
+
+                        $('#demo1').attr('src', result);
+                    });
+                }
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+
+                    var fileupload = $(".stu_image");
+                    fileupload.attr("value", res.data.src);
+                    console.log(fileupload.attr("value"));
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+<!--<div th:replace="menu/left :: leftbar" ></div>-->
+<!--<div th:replace="menu/top :: topbar"></div>-->
+<div class="body">
+
+
+    <h2 class="tablename">上传成绩</h2>
+    <hr class="layui-bg-gray">
+    <div class="form">
+        <form class="layui-form" action="/student/addstudentscore" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">学号:</label>
+                <div class="layui-input-inline">
+                    <select name="stu_id" lay-verify="required">
+                        <option th:value="${student.stu_id}" th:each="student:${allStudents}"
+                                th:text="${student.stu_id}"></option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-inline">
+                        <select name="test_describe" lay-verify="required" lay-search="">
+                            <option value="">选择考试描述</option>
+                            <option value="第一学期期中考试">第一学期期中考试</option>
+                            <option value="第一学期期末考试">第一学期期末考试</option>
+                            <option value="第二学期期中考试">第二学期期中考试</option>
+                            <option value="第二学期期末考试">第二学期期末考试</option>
+                            <option value="开学考试">开学考试</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">语文成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="chinese" lay-verify="required" autocomplete="off" placeholder="请输入语文成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">数学成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="mathematics" lay-verify="required" autocomplete="off"
+                               placeholder="请输入数学成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">英语成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="english" lay-verify="required" autocomplete="off" placeholder="请输入英语成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">政治成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="politics" lay-verify="required" autocomplete="off"
+                               placeholder="请输入政治成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">历史成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="history" lay-verify="required" autocomplete="off" placeholder="请输入历史成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">地理成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="geography" lay-verify="required" autocomplete="off"
+                               placeholder="请输入地理成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">生物成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="biology" lay-verify="required" autocomplete="off" placeholder="请输入生物成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">化学成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="chemistry" lay-verify="required" autocomplete="off"
+                               placeholder="请输入化学成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">物理成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="physics" lay-verify="required" autocomplete="off" placeholder="请输入物理成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">音乐成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="music" lay-verify="required" autocomplete="off" placeholder="请输入音乐成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">美术成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="arts" lay-verify="required" autocomplete="off" placeholder="请输入美术成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">体育成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sports" lay-verify="required" autocomplete="off" placeholder="请输入体育成绩"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+        <br>
+
+
+        <div class="layui-row">
+            <div class="layui-col-md3 layui-col-md-offset3">
+                <button  class="layui-btn layui-btn-radius layui-btn-normal" lay-submit="" lay-filter="demo1">添加</button>
+            </div>
+            <div class="layui-col-md3 layui-col-md-offset1">
+                <button type="reset" class="layui-btn layui-btn-radius  layui-btn-danger">重置</button>
+            </div>
+        </div>
+        <br>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date1'
+        });
+        laydate.render({
+            elem: '#date2'
+        });
+
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+            , password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , username: [
+                /^[\S]{2,}$/
+                , '用户名长度必须大于2，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+
+    });
+</script>
+
+
+</body>
+</html>

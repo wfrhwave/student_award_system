@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.braisedpanda.shirotest.mapper.GradesMapper">
+
+
+    <!--根据学生的id查找所有的学生成绩-->
+    <select id="getMyGrade" resultType="com.braisedpanda.shirotest.bean.Student_Grades">
+        select s.stu_name,
+               s.stu_id,
+               sg.test_describe,
+               s.class_id,
+               stu_grades_id,
+               chinese,
+               mathematics,
+               english,
+               politics,
+               history,
+               geography,
+               biology,
+               chemistry,
+               physics,
+               music,
+               arts,
+               sports
+        from studentsystem.student s
+                 left join studentsystem.student_grades sg on sg.stu_id = s.stu_id
+        where s.stu_id = #{stu_id}
+
+    </select>
+
+    <!--查找所有的学生成绩-->
+    <select id="getAllGrade" resultType="com.braisedpanda.shirotest.bean.Student_Grades">
+        select s.stu_name,
+               s.stu_id,
+               sg.test_describe,
+               s.class_id,
+               stu_grades_id,
+               chinese,
+               mathematics,
+               english,
+               politics,
+               history,
+               geography,
+               biology,
+               chemistry,
+               physics,
+               music,
+               arts,
+               sports
+        from studentsystem.student s
+                 left join studentsystem.student_grades sg on sg.stu_id = s.stu_id
+
+    </select>
+
+    <!--更新成绩-->
+    <update id="updateScore" parameterType="com.braisedpanda.shirotest.bean.Student_Grades">
+        update
+        studentsystem.student_grades
+        <set>
+            <if test="test_describe !=null and test_describe != ''">
+                test_describe =#{test_describe},
+            </if>
+            <if test="chinese !=null and chinese != ''">
+                chinese =#{chinese},
+            </if>
+            <if test="mathematics !=null and mathematics != ''">
+                mathematics =#{mathematics},
+            </if>
+            <if test="english !=null and english != ''">
+                english =#{english},
+            </if>
+            <if test="politics !=null and politics != ''">
+                politics =#{politics},
+            </if>
+            <if test="history !=null and history != ''">
+                history =#{history},
+            </if>
+            <if test="geography !=null and geography != ''">
+                geography =#{geography},
+            </if>
+            <if test="arts !=null and arts != ''">
+                arts =#{arts},
+            </if>
+            <if test="music !=null and music != ''">
+                music =#{music},
+            </if>
+            <if test="sports !=null and sports != ''">
+                sports =#{sports},
+            </if>
+            <if test="physics !=null and physics != ''">
+                physics =#{physics},
+            </if>
+            <if test="chemistry !=null and chemistry != ''">
+                chemistry =#{chemistry},
+            </if>
+            <if test="biology !=null and biology != ''">
+                biology =#{biology},
+            </if>
+        </set>
+        <where>
+            stu_grades_id=#{stu_grades_id}
+        </where>
+    </update>
+    <!--根据查找所有的学生成绩-->
+    <select id="getOneStudentGrade" resultType="com.braisedpanda.shirotest.bean.Student_Grades">
+        select s.stu_name,
+               s.stu_id,
+               sg.test_describe,
+               s.class_id,
+               stu_grades_id,
+               chinese,
+               mathematics,
+               english,
+               politics,
+               history,
+               geography,
+               biology,
+               chemistry,
+               physics,
+               music,
+               arts,
+               sports
+        from studentsystem.student s
+                 left join studentsystem.student_grades sg on sg.stu_id = s.stu_id
+        where stu_grades_id = #{stu_grades_id}
+    </select>
+
+    <!--根据class_id查找班级的学生成绩-->
+    <select id="getMyClassradeByids" resultType="com.braisedpanda.shirotest.bean.Student_Grades">
+        select s.stu_name,
+        s.stu_id,
+        sg.test_describe,
+        s.class_id,
+        stu_grades_id,
+        chinese,
+        mathematics,
+        english,
+        politics,
+        history,
+        geography,
+        biology,
+        chemistry,
+        physics,
+        music,
+        arts,
+        sports
+        from studentsystem.student s
+        left join studentsystem.student_grades sg on sg.stu_id = s.stu_id
+        where s.class_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <!--添加学生成绩详细-->
+    <insert id="addGrades" parameterType="com.braisedpanda.shirotest.bean.Student_Grades">
+        insert into student_grades
+        (stu_grades_id, stu_id,
+         test_describe,
+         chinese, mathematics,
+         english, politics,
+         history, geography,
+         biology, chemistry,
+         physics, music,
+         arts, sports)
+        values (#{stu_grades_id}, #{stu_id}, #{test_describe}, #{chinese},
+                #{mathematics}, #{english}, #{politics}, #{history},
+                #{geography}, #{biology}, #{chemistry}, #{physics},
+                #{music}, #{arts}, #{sports})
+    </insert>
+    <delete id="deleteScoreBystu_grades_id" parameterType="string">
+        delete
+        from student_grades
+        where stu_grades_id = #{stu_grades_id}
+    </delete>
+</mapper>

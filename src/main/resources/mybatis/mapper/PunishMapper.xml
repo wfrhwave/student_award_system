@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.braisedpanda.shirotest.mapper.PunishMapper">
+
+
+    <!--添加奖励信息-->
+    <insert id="addPunish" parameterType="com.braisedpanda.shirotest.bean.Punish">
+        insert into punish
+        (punish_id,
+         stu_id,
+         pn_time,
+         punish)
+        values (null,
+                #{stu_id},
+                #{pn_time},
+                #{punish})
+    </insert>
+    <resultMap id="student_Punish" type="com.braisedpanda.shirotest.bean.Punish">
+        <id column="punish_id" property="punish_id"/>
+        <result column="pn_time" property="pn_time"/>
+        <result column="punish" property="punish"/>
+        <result column="psid" property="stu_id"/>
+        <association property="student" javaType="com.braisedpanda.shirotest.bean.Student">
+            <result column="stu_name" property="stu_name"/>
+            <result column="class_id" property="class_id"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllPunish" resultMap="student_Punish">
+        select s.stu_id psid,
+               stu_name,
+               class_id,
+               punish,
+               pn_time,
+               punish_id
+        from punish p
+                 left join student s
+                           on s.stu_id = p.stu_id
+    </select>
+
+
+    <select id="getMyPunish" parameterType="string" resultMap="student_Punish">
+        select s.stu_id psid,
+               stu_name,
+               class_id,
+               punish,
+               pn_time,
+               punish_id
+        from punish p
+                 left join student s
+                           on s.stu_id = p.stu_id
+        where s.stu_id = #{stu_id}
+    </select>
+
+    <select id="getmyclassPunish" parameterType="list" resultMap="student_Punish">
+        select s.stu_id psid,
+        stu_name,
+        class_id,
+        punish,
+        pn_time,
+        punish_id
+        from punish p
+        left join student s
+        on s.stu_id = p.stu_id
+        where class_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deletePunishById" parameterType="int">
+        delete
+        from punish
+        where punish_id = #{punish_id}
+    </delete>
+
+
+    <select id="getById" parameterType="int" resultType="com.braisedpanda.shirotest.bean.Punish">
+        select *
+        from punish
+        where punish_id = #{punish_id}
+    </select>
+
+
+    <update id="updatePunish" parameterType="com.braisedpanda.shirotest.bean.Punish">
+        update punish
+        set pn_time=#{pn_time},
+            punish=#{punish}
+        where punish_id = #{punish_id}
+    </update>
+
+
+</mapper>

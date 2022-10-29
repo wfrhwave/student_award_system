@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>修改学生成绩</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{lib/css/main.css}">
+    <link rel="stylesheet" th:href="@{/lib/css/public.css}">
+
+    <script th:src="@{/lib/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+
+
+    <style>
+
+        .layui-form input {
+            width: 215px;
+        }
+
+        .body {
+            margin-left: 200px;
+            height: 800px;
+        }
+
+        #image2 {
+            wdith: 100px;
+            height: 100px;
+        }
+
+        .layui-upload-list {
+            margin-left: 120px;
+
+        }
+
+        .layui-upload-img {
+            wdith: 100px;
+            height: 100px;
+        }
+
+        body {
+            background: url("images/background/page_bg.JPG");
+            background-size: 100%;
+
+        }
+    </style>
+
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+
+    </script>
+</head>
+<body>
+<!--<div th:replace="menu/left :: leftbar" ></div>-->
+<!--<div th:replace="menu/top :: topbar"></div>-->
+<div class="body">
+
+
+    <h2 class="tablename">修改学生成绩</h2>
+    <hr class="layui-bg-gray">
+    <div class="form">
+        <form class="layui-form" action="/student/updatestudentscore" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">学号:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stu_id" required th:value="${myGrade.stu_id}" placeholder=""
+                           autocomplete="off" class="layui-input stu_name" readonly>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="test_describe" required th:value="${myGrade.test_describe}"
+                               placeholder="" autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" th:value="${myGrade.stu_grades_id}" name="stu_grades_id">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">语文成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="chinese" required th:value="${myGrade.chinese}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">数学成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="mathematics" required th:value="${myGrade.mathematics}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">英语成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="english" required th:value="${myGrade.english}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">政治成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="politics" required th:value="${myGrade.politics}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">历史成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="history" required th:value="${myGrade.history}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">地理成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="geography" required th:value="${myGrade.geography}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">生物成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="biology" required th:value="${myGrade.english}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">化学成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="chemistry" required th:value="${myGrade.chemistry}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">物理成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="physics" required th:value="${myGrade.physics}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">音乐成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="music" required th:value="${myGrade.music}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">美术成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="arts" required th:value="${myGrade.arts}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">体育成绩</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sports" required th:value="${myGrade.sports}" placeholder=""
+                               autocomplete="off" class="layui-input stu_name">
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+
+            <div class="layui-row">
+                <div class="layui-col-md3 layui-col-md-offset3">
+                    <button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit="" lay-filter="demo1">更新
+                    </button>
+                </div>
+                <div class="layui-col-md3 layui-col-md-offset1">
+                    <button type="reset" class="layui-btn layui-btn-radius  layui-btn-danger">重置</button>
+                </div>
+            </div>
+            <br>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date1'
+        });
+        laydate.render({
+            elem: '#date2'
+        });
+
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+            , password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , username: [
+                /^[\S]{2,}$/
+                , '用户名长度必须大于2，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+
+    });
+</script>
+
+
+</body>
+</html>

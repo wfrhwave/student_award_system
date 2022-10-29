@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.braisedpanda.shirotest.mapper.RewardMapper">
+
+
+    <!--添加奖励信息-->
+    <insert id="addReward" parameterType="com.braisedpanda.shirotest.bean.Reward">
+        insert into reward
+        (reward_id,
+         stu_id,
+         rw_time,
+         reward)
+        values (null,
+                #{stu_id},
+                #{rw_time},
+                #{reward})
+    </insert>
+    <resultMap id="student_reward" type="com.braisedpanda.shirotest.bean.Reward">
+        <id column="reward_id" property="reward_id"/>
+        <result column="rw_time" property="rw_time"/>
+        <result column="reward" property="reward"/>
+        <result column="rsid" property="stu_id"/>
+        <association property="student" javaType="com.braisedpanda.shirotest.bean.Student">
+            <result column="stu_name" property="stu_name"/>
+            <result column="class_id" property="class_id"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllReward" resultMap="student_reward">
+        select s.stu_id rsid,
+               stu_name,
+               class_id,
+               reward,
+               rw_time,
+               reward_id
+        from reward r
+                 left join student s
+                           on s.stu_id = r.stu_id
+    </select>
+
+
+
+    <select id="getMyReward" parameterType="string" resultMap="student_reward">
+        select s.stu_id rsid,
+               stu_name,
+               class_id,
+               reward,
+               rw_time,
+               reward_id
+        from reward r
+                 left join student s
+                           on s.stu_id = r.stu_id
+    where s.stu_id = #{stu_id}
+    </select>
+
+    <select id="getmyclassreward" parameterType="list" resultMap="student_reward">
+        select s.stu_id rsid,
+               stu_name,
+               class_id,
+               reward,
+               rw_time,
+               reward_id
+        from reward r
+                 left join student s
+                           on s.stu_id = r.stu_id
+        where class_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+<delete id="deleteRewardById" parameterType="int">
+        delete from reward where reward_id=#{reward_id}
+</delete>
+
+
+<select id="getById" parameterType="int" resultType="com.braisedpanda.shirotest.bean.Reward">
+    select * from reward where reward_id=#{reward_id}
+</select>
+
+
+    <update id="updateReward" parameterType="com.braisedpanda.shirotest.bean.Reward">
+        update reward
+        set rw_time=#{rw_time},
+            reward=#{reward}
+        where reward_id = #{reward_id}
+    </update>
+
+
+
+
+</mapper>
