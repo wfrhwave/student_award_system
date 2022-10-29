@@ -10,7 +10,8 @@ SpringBoot+Layui搭建的评奖评优管理系统，加入了shiro安全框架�
 （3）学生用户可以查看和修改自己的信息、密码以及查看个人获奖情况和奖惩信息；
 
 [Shiro](https://www.bilibili.com/video/BV1uz4y197Zm)
-体验地址：evaluation.jinxs.icu
+
+[体验地址：](evaluation.jinxs.icu)evaluation.jinxs.icu
 
 管理员：
 
@@ -36,6 +37,8 @@ SpringBoot+Layui搭建的评奖评优管理系统，加入了shiro安全框架�
 借鉴了此项目[Github](https://github.com/BraisedPanda/StudentManagementSystem)
 
 我的博客[少年有事问春风](https://www.jinxs.icu/)
+
+
 ###管理员功能
 - 成绩管理
   - 查看所有学生成绩
